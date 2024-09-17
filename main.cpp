@@ -21,7 +21,12 @@ int main(){
         menu();
         cout<<"[0] - Sair"<<endl;
         cout<<"Insira uma das opcoes acima: ";
-        cin>>opcao;
+        do{
+            cin>>opcao;
+            if(opcao > 9 || opcao < 0){
+                cout<<"Opcao invalida."<<endl;
+            }
+        }while(opcao > 9 || opcao < 0);
         switch(opcao){
             case 0: {
                 cout<<"Saindo...";
@@ -49,10 +54,7 @@ int main(){
                 break;
             }
             case 6: {
-                int id;
-                cout<<"Insira o ID do usuario pelo qual deseja buscar os livros: ";
-                cin>>id;
-                pesquisarLivroPUsuario(id, usuarios);
+                pesquisarLivroPUsuario(usuarios);
                 break;
             }
             case 7: {

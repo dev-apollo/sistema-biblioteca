@@ -43,7 +43,7 @@ void emprestarLivro(usuario &usuarioEspecifico, livro &livroEspecifico, bool men
 void devolverLivro(vector<usuario> &usuarios, vector<livro> &biblioteca);
 void listarUsuarios(vector<usuario> &usuarios);
 void pesquisarLivro(vector<livro> &biblioteca);
-void pesquisarLivroPUsuario(int id, vector<usuario> &usuarios);
+void pesquisarLivroPUsuario(vector<usuario> &usuarios);
 void listarLivros(vector<livro> &biblioteca);
 void exibirEstatisticas(vector<usuario> &usuarios, vector<livro> &biblioteca);
 void menu();

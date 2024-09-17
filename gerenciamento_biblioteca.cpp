@@ -14,6 +14,9 @@ livro solicitarInfosLivros(){
     do{
         cout<<"Insira a quantidade de copias do livro: ";
         cin>>copias;
+        if(copias < 1){
+            cout<<"Quantidade invalida."<<endl;
+        }
     }while(copias < 1);
     return cadastrarLivro(titulo, autor, publicacao, copias);
 }
@@ -109,7 +112,7 @@ void emprestarLivro(usuario &usuarioEspecifico, livro &livroEspecifico, bool men
     tm *dataExibir = localtime(&novoEmprestimo.dataDevolucao);
     if(mensagem){
         cout<<"O livro "<<novoEmprestimo.livro.titulo<<" tem que ser devolvido no dia: "<<dataExibir->tm_mday<<"/"<<dataExibir->tm_mon+1<<"/"<<dataExibir->tm_year+1900<<endl;
-        cout << "Para cada dia de atraso, sera cobrado R$20,00" << endl;
+        cout << "Para cada dia de atraso, sera cobrado R$20,00!"<< endl;
     }
     livroEspecifico.copias--;
     livroEspecifico.vzsEmprestado++;
@@ -120,7 +123,6 @@ void devolverLivro(vector<usuario> &usuarios, vector<livro> &biblioteca)
 {
     int i;
     int idUsuario;
-    usuario usuarioEspecifico;
     bool idExiste = false;
     do{
         cout<<"Insira o ID do usuario: ";
@@ -160,6 +162,7 @@ void listarUsuarios(vector<usuario> &usuarios)
     for(int i = 0; i < usuarios.size(); i++){
         cout<<"ID: "<<usuarios[i].id<<endl;
         cout<<"Nome: "<<usuarios[i].nome<<endl;
+        cout<<"----"<<endl;
     }
 }
 
@@ -178,6 +181,7 @@ void pesquisarLivro(vector<livro> &biblioteca)
             cout<<"Autor: "<<biblioteca[i].autor<<endl;
             cout<<"Ano de Publicacao: "<<biblioteca[i].publicacao<<endl;
             cout<<"Copias disponiveis: "<<biblioteca[i].copias<<endl;
+            cout<<"----"<<endl;
             contador++;
          }else{
             for(char c: pesquisa){
@@ -192,33 +196,45 @@ void pesquisarLivro(vector<livro> &biblioteca)
                 cout<<"Autor: "<<biblioteca[i].autor<<endl;
                 cout<<"Ano de Publicacao: "<<biblioteca[i].publicacao<<endl;
                 cout<<"Copias disponiveis: "<<biblioteca[i].copias<<endl;
+                cout<<"----"<<endl;
                 contador++;
                 }
             }
          }
     }
     if(contador == 0){
-        cout<<"Nenhum livro."<<endl;
+        cout<<"Nenhum livro encontrado."<<endl;
     }
      cout<<endl;
 }
 
-void pesquisarLivroPUsuario(int id, vector<usuario> &usuarios){
-    for(int i = 0; i < usuarios.size(); i++){
-        if(usuarios[i].id == id){
-            int contador = 0;
-            cout<<"O usuario "<<usuarios[i].nome<<" tem os seguintes livros alugados: "<<endl;
-            for(int j = 0; j < usuarios[i].historico.size(); j++){
-                if(usuarios[i].historico[j].emprestimoAtual){
-                    cout<<usuarios[i].historico[j].livro.titulo<<endl;
-                    contador++;
-                }
+void pesquisarLivroPUsuario(vector<usuario> &usuarios){
+    int i;
+    int idUsuario;
+    bool idExiste = false;
+    do{
+        cout<<"Insira o ID do usuario: ";
+        cin>>idUsuario;
+        for(i = 0; i < usuarios.size(); i++){
+            if(idUsuario == usuarios[i].id){
+                idExiste = true;
+                break;
             }
-            if(contador == 0){
-                cout<<"Nenhum livro."<<endl;
-            }
-            break;
         }
+        if(!idExiste){
+            cout<<"Usuario nao encontrado. Verifique se escreveu corretamente."<<endl;
+        }
+    }while(!idExiste);
+    int contador = 0;
+    cout<<"O usuario "<<usuarios[i].nome<<" tem os seguintes livros alugados: "<<endl;
+    for(int j = 0; j < usuarios[i].historico.size(); j++){
+        if(usuarios[i].historico[j].emprestimoAtual){
+            cout<<usuarios[i].historico[j].livro.titulo<<endl;
+            contador++;
+        }
+    }
+    if(contador == 0){
+        cout<<"Nenhum livro."<<endl;
     }
 }
 
@@ -229,6 +245,7 @@ void listarLivros(vector<livro> &biblioteca)
         cout<<"Autor: "<<biblioteca[i].autor<<endl;
         cout<<"Ano de Publicacao: "<<biblioteca[i].publicacao<<endl;
         cout<<"Quantidade de copias disponiveis: "<<biblioteca[i].copias<<endl;
+        cout<<"----"<<endl;
     }
 }
 
