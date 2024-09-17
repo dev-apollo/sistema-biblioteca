@@ -52,18 +52,16 @@ usuario cadastrarUsuario(string nome)
 
 void solicitarInfosEmprestimo(vector<usuario> &usuarios, vector<livro> &biblioteca)
 {
+    int i, j;
     int idUsuario;
     string tituloDoLivro;
-    usuario usuarioEspecifico;
-    livro livroEspecifico;
     bool idExiste = false, tituloExiste = false;
     do{
         cout<<"Insira o ID do usuario: ";
         cin>>idUsuario;
-        for(int i = 0; i < usuarios.size(); i++){
+        for(i = 0; i < usuarios.size(); i++){
             if(idUsuario == usuarios[i].id){
                 idExiste = true;
-                usuarioEspecifico = usuarios[i];
                 break;
             }
         }
@@ -72,8 +70,8 @@ void solicitarInfosEmprestimo(vector<usuario> &usuarios, vector<livro> &bibliote
         }
     }while(!idExiste);
     bool podeEmprestar;
-    for(int i = 0; i < usuarioEspecifico.historico.size(); i++){
-        if(usuarioEspecifico.historico[i].emprestimoAtual == true){
+    for(int k = 0; k < usuarios[i].historico.size(); k++){
+        if(usuarios[i].historico[k].emprestimoAtual == true){
             podeEmprestar = false;
             break;
         }else{
@@ -85,10 +83,9 @@ void solicitarInfosEmprestimo(vector<usuario> &usuarios, vector<livro> &bibliote
             cout<<"Insira o titulo do livro: ";
             cin.ignore();
             getline(cin, tituloDoLivro);
-            for(int i = 0; i < biblioteca.size(); i++){
-                if(tituloDoLivro == biblioteca[i].titulo){
+            for(j = 0; j < biblioteca.size(); j++){
+                if(tituloDoLivro == biblioteca[j].titulo){
                     tituloExiste = true;
-                    livroEspecifico = biblioteca[i];
                     break;
                 }
             }
@@ -96,7 +93,7 @@ void solicitarInfosEmprestimo(vector<usuario> &usuarios, vector<livro> &bibliote
                 cout<<"Livro nao encontrado. Verifique se escreveu corretamente."<<endl;
             }
         }while(!tituloExiste);
-        emprestarLivro(usuarioEspecifico, livroEspecifico, true);
+        emprestarLivro(usuarios[i], biblioteca[j], true);
     }else{
         cout<<"O usuario ja possui um livro em sua posse, ele precisa devolver esse para poder pegar outro."<<endl;
     }
